@@ -42,22 +42,24 @@ class Sentences extends Component {
     return (
         <ul>
             {
-                (this.props.sentences[this.props.parentId] ? this.props.sentences[this.props.parentId] : []).map(item => {
-                    const itemId = `Sentence-${item.id}`;
+                (this.props.sentences[this.props.parentId] ? this.props.sentences[this.props.parentId] : [])
+                  .map((item, index) => {
+                    const itemId = `sentence-${index}`;
                     return <li className={ itemId } key={itemId}>
-                        {item.text} <button onClick={ this.removeSentence.bind(this, item.id) }>Remove</button>
+                        {item.text}
+                        <button data-testid={`remove-sentence-${index}`} onClick={ this.removeSentence.bind(this, item.id) }>Remove</button>
                     </li>;
                 })
             }
                 <li>
-                    <label>Add new sentence</label>
-                    <input 
+                    <input
+                        aria-label={`sentence-input-${this.state.parentId}`}
                         type="text"
                         name="sentence"
                         value={this.state.sentence}
                         onChange={this.handleChange.bind(this)}
                     />
-                    <button onClick={this.addNewSentence.bind(this)}>add</button>
+                    <button onClick={this.addNewSentence.bind(this)}>add new sentence</button>
                 </li>
         </ul>
     )
